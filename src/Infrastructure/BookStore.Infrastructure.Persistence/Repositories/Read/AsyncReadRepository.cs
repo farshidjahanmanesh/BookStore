@@ -17,12 +17,12 @@ namespace BookStore.Infrastructure.Persistence.Repositories.Read
         {
             this._ctx = ctx;
         }
-        public async Task<T> GetById<TKey>(TKey id) where TKey : struct
+        public virtual async Task<T> GetById<TKey>(TKey id) where TKey : struct
         {
             return await _ctx.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetList()
+        public virtual async Task<IEnumerable<T>> GetList()
         {
             return await _ctx.Set<T>().AsNoTracking().ToListAsync();
         }

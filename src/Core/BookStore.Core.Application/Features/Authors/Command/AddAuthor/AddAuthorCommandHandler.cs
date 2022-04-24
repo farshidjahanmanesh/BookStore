@@ -20,8 +20,8 @@ namespace BookStore.Core.Application.Features.Authors.Command.AddAuthor
         public async Task<AddAuthorResponse> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
         {
             var response = new AddAuthorResponse();
-            var author = _mapper.Map<Author>(request);
-            var result = await _repo.AddItem(author);
+            var authorModel = Author.Create(request.FName, request.LName, request.Age);
+            var result = await _repo.AddItem(authorModel);
             response.Author = _mapper.Map<AddAuthorAuthorDto>(result);
             return response;
         }

@@ -5,8 +5,14 @@ namespace BookStore.Core.Domain.Common
 {
     public abstract class Person : Entity<Guid>
     {
-        public string FName { get; set; }
-        public string LName { get; set; }
-        public int Age { get; set; }
+        protected Person(string fName, string lName,int age) : base()
+        {
+            this.FName = fName;
+            this.LName = lName;
+            this.Age = age;
+        }
+        public string FName { get; protected set; }
+        public string LName { get; protected set; }
+        public int Age { get; protected set; }
     }
 }

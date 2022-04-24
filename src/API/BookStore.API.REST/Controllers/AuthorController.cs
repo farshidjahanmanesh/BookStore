@@ -1,5 +1,6 @@
 ﻿using BookStore.API.REST.Filters;
 using BookStore.Core.Application.Features.Authors.Command.AddAuthor;
+using BookStore.Core.Application.Features.Authors.Query.GetAllAuthors;
 using BookStore.Core.Application.Features.Authors.Query.GetAuthorById;
 using BookStore.Core.Application.Responses;
 using MediatR;
@@ -17,6 +18,13 @@ namespace BookStore.API.REST.Controllers
 
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(GetAllAuthorsResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _sender.Send(new GetAllAuthorsQuery());
+            return Ok(result);
+        }
         [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(GetAuthorByIdResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status400BadRequest)]

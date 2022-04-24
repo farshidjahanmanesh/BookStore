@@ -2,6 +2,10 @@
 {
     public class Entity<T> : AuditableEntity where T : struct
     {
-        public T Id { get; set; }
+        protected Entity()
+        {
+
+        }
+        public T Id { get; protected set; }
     }
 }

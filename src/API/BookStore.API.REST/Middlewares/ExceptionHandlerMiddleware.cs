@@ -58,6 +58,7 @@ namespace BookStore.API.REST.Middlewares
                     break;
                 case Exception eException:
                     httpStatusCode = HttpStatusCode.BadRequest;
+                    response.ValidationErrors.Add(eException.Message);
                     break;
             }
             context.Response.StatusCode = (int)httpStatusCode;
