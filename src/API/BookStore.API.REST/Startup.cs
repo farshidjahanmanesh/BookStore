@@ -1,6 +1,8 @@
 using BookStore.API.REST.Filters;
 using BookStore.API.REST.Middlewares;
+using BookStore.API.REST.Models;
 using BookStore.Core.Application;
+using BookStore.Core.Application.Contracts;
 using BookStore.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +38,8 @@ namespace BookStore.API.REST
             services.AddPersistenceServices(Configuration);
             services.AddApplicationServices();
             services.AddSwaggerGen();
+            services.AddHttpContextAccessor();
+            services.AddScoped<IUserDataService, UserDataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -18,6 +18,7 @@ namespace BookStore.Infrastructure.Persistence.Contexts
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Purchaser> Purchasers { get; set; }
+        public DbSet<RequestResponseLog> RequestResponseLogs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);

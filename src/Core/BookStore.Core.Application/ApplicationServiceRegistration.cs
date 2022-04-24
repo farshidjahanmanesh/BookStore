@@ -17,7 +17,9 @@ namespace BookStore.Core.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             AssemblyScanner.FindValidatorsInAssembly(Assembly.GetExecutingAssembly())
                 .ForEach(item => services.AddScoped(item.InterfaceType, item.ValidatorType));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(FluentValidationPipeline<,>));
+            
             return services;
         }
     }

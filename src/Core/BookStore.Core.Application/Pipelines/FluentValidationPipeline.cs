@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Core.Application.Pipelines
 {
+
     public class FluentValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : BaseResponse
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
