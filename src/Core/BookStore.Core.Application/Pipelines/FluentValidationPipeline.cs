@@ -1,4 +1,4 @@
-﻿using BookStore.Core.Application.Responses;
+﻿
 using FluentValidation;
 using MediatR;
 using System;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace BookStore.Core.Application.Pipelines
 {
 
-    public class FluentValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse : BaseResponse
+    public class FluentValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> //where TResponse : BaseResponse
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

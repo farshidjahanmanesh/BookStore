@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using BookStore.Core.Application.Contracts;
-using BookStore.Core.Domain.Entities;
-using MediatR;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 
 namespace BookStore.Core.Application.Features.Authors.Command.AddAuthor
 {
-    public class AddAuthorCommand : IRequest<AddAuthorResponse>
+    public class AddAuthorCommand : IRequest<AddAuthorAuthorDto>
     {
         public string FName { get; set; }
         public string LName { get; set; }

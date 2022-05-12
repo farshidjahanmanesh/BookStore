@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Core.Application.Features.Authors.Command.AddAuthor
 {
-    public class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand, AddAuthorResponse>
+    public class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand, AddAuthorAuthorDto>
     {
         private readonly IAsyncWriteRepository<Author> _repo;
         private readonly IMapper _mapper;
@@ -17,13 +17,12 @@ namespace BookStore.Core.Application.Features.Authors.Command.AddAuthor
             this._repo = repo;
             this._mapper = mapper;
         }
-        public async Task<AddAuthorResponse> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
+        public async Task<AddAuthorAuthorDto> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
         {
-            var response = new AddAuthorResponse();
             var authorModel = Author.Create(request.FName, request.LName, request.Age);
             var result = await _repo.AddItem(authorModel);
-            response.Author = _mapper.Map<AddAuthorAuthorDto>(result);
-            return response;
+            var author = _mapper.Map<AddAuthorAuthorDto>(result);
+            return author;
         }
     }
 }

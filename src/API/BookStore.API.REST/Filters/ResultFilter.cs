@@ -1,4 +1,5 @@
-﻿using BookStore.Core.Application.Responses;
+﻿using BookStore.API.REST.Models;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -13,11 +14,14 @@ namespace BookStore.API.REST.Filters
         public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
             var result = context.Result as ObjectResult;
-            if (result?.Value is BaseResponse value)
+            result.Value = new RestResponse()
             {
-                value.URL = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}{context.HttpContext.Request.Path}{context.HttpContext.Request.QueryString}";
-                value.Method = context.HttpContext.Request.Method;
-            }
+                Method = context.HttpContext.Request.Method,
+                URL = $"{context.HttpContext.Request.Scheme}://{context.HttpContext.Request.Host}{context.HttpContext.Request.Path}{context.HttpContext.Request.QueryString}",
+                Result = result.Value,
+                Status = true,
+            };
+
             await next();
         }
     }

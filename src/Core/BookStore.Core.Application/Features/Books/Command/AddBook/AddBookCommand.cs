@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookStore.Core.Application.Contracts;
+
 using BookStore.Core.Domain.Entities;
 using MediatR;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace BookStore.Core.Application.Features.Books.Command.AddBook
 {
-    public class AddBookCommand : IRequest<AddBookResponse>, IMapFrom<Book>
+    public class AddBookCommand : IRequest<AddBookBookDto>, IMapFrom<Book>
     {
         public string Title { get; set; }
         public decimal Price { get; set; }

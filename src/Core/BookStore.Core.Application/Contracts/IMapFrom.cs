@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 using System.Text;
 
 namespace BookStore.Core.Application.Contracts

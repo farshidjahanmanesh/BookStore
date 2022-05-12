@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookStore.Core.Application.Contracts.Persistence.Read;
 using BookStore.Core.Application.Contracts.Persistence.Write;
+
 using BookStore.Core.Domain.Entities;
 using MediatR;
 using System.Threading;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Core.Application.Features.Books.Command.AddBook
 {
-    public class AddBookCommandHandler : IRequestHandler<AddBookCommand, AddBookResponse>
+    public class AddBookCommandHandler : IRequestHandler<AddBookCommand, AddBookBookDto>
     {
         private readonly IAsyncReadRepository<Author> _authorReadRepo;
         private readonly IAsyncWriteRepository<Author> _authorWriteRepo;
@@ -21,15 +22,13 @@ namespace BookStore.Core.Application.Features.Books.Command.AddBook
             this._authorWriteRepo = authorWriteRepo;
             this._mapper = mapper;
         }
-        public async Task<AddBookResponse> Handle(AddBookCommand request, CancellationToken cancellationToken)
+        public async Task<AddBookBookDto> Handle(AddBookCommand request, CancellationToken cancellationToken)
         {
-            var response = new AddBookResponse();
             var @object = Book.Create(request.Title, request.Price, request.Count, request.AuthorId);
             var author = await _authorReadRepo.GetById(request.AuthorId);
             author.AddBook(@object);
             _authorWriteRepo.Update(author);
-            response.Book = _mapper.Map<AddBookBookDto>(@object);
-            return response;
+            return _mapper.Map<AddBookBookDto>(@object);
         }
     }
 }

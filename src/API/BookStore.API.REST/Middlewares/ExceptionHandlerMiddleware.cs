@@ -1,6 +1,5 @@
-﻿using BookStore.Core.Application.Exceptions;
-using BookStore.Core.Application.Responses;
-using Microsoft.AspNetCore.Builder;
+﻿using BookStore.API.REST.Models;
+using BookStore.Core.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Net;
@@ -9,14 +8,6 @@ using System.Threading.Tasks;
 
 namespace BookStore.API.REST.Middlewares
 {
-    public static class MiddlewareExtensions
-    {
-        public static IApplicationBuilder UseExceptionMiddleware(this IApplicationBuilder builder)
-        {
-            builder.UseMiddleware<ExceptionHandlerMiddleware>();
-            return builder;
-        }
-    }
     public class ExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
@@ -42,8 +33,7 @@ namespace BookStore.API.REST.Middlewares
         {
             var httpStatusCode = HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";
-            var result = string.Empty;
-            var response = new BaseResponse(false);
+            var response = new RestErrorResponse();
             response.URL = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}";
             response.Method = context.Request.Method;
             switch (ex)
@@ -62,7 +52,7 @@ namespace BookStore.API.REST.Middlewares
                     break;
             }
             context.Response.StatusCode = (int)httpStatusCode;
-            result = JsonSerializer.Serialize(response);
+            var result = JsonSerializer.Serialize(response);
             return context.Response.WriteAsync(result);
         }
     }

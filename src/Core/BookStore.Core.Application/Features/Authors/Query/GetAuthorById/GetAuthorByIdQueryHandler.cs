@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Core.Application.Features.Authors.Query.GetAuthorById
 {
-    public class GetAuthorByIdQueryHandler : IRequestHandler<GetAuthorByIdQuery, GetAuthorByIdResponse>
+    public class GetAuthorByIdQueryHandler : IRequestHandler<GetAuthorByIdQuery, GetAuthorByIdAuthorDto>
     {
         private readonly IAsyncAuthorReadRepository _repo;
         private readonly IMapper _mapper;
@@ -16,13 +16,10 @@ namespace BookStore.Core.Application.Features.Authors.Query.GetAuthorById
             this._repo = repo;
             this._mapper = mapper;
         }
-        public async Task<GetAuthorByIdResponse> Handle(GetAuthorByIdQuery request, CancellationToken cancellationToken)
+        public async Task<GetAuthorByIdAuthorDto> Handle(GetAuthorByIdQuery request, CancellationToken cancellationToken)
         {
             var @object = await _repo.GetAuthorWithBooks(request.Id);
-            return new GetAuthorByIdResponse()
-            {
-                Author = _mapper.Map<GetAuthorByIdAuthorDto>(@object)
-            };
+            return _mapper.Map<GetAuthorByIdAuthorDto>(@object); ;
         }
     }
 }

@@ -1,3 +1,4 @@
+using BookStore.API.REST.Extensions;
 using BookStore.API.REST.Filters;
 using BookStore.API.REST.Middlewares;
 using BookStore.API.REST.Models;
